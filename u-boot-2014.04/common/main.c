@@ -27,9 +27,13 @@ DECLARE_GLOBAL_DATA_PTR;
 /*
  * Board-specific Platform code can reimplement show_boot_progress () if needed
  */
+#if 0 /* ¥¶¿Ì±‡“Î¥ÌŒÛ [haihui.deng 2020/08/25 13:03]*/
 void inline __show_boot_progress (int val) {}
 void show_boot_progress (int val) __attribute__((weak, alias("__show_boot_progress")));
-
+#else
+void __show_boot_progress (int val) {}
+void show_boot_progress (int val) __attribute__((weak, alias("__show_boot_progress")));
+#endif
 #define MAX_DELAY_STOP_STR 32
 
 #define DEBUG_PARSER	0	/* set to 1 to debug */

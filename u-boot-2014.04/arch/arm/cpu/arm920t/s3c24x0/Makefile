@@ -7,5 +7,6 @@
 
 obj-$(CONFIG_USE_IRQ) += interrupts.o
 obj-$(CONFIG_DISPLAY_CPUINFO)	+= cpu_info.o
+obj-y	+= io.o
 obj-y	+= speed.o
 obj-y	+= timer.o

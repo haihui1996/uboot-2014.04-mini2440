@@ -722,6 +722,8 @@ endif
 endif
 
 LDFLAGS_u-boot += $(LDFLAGS_FINAL)
+# /* Avoids Not enough room for program headers [haihui.deng 2020/08/25 13:12] */
+LDFLAGS_u-boot += $(call ld-option, --no-dynamic-linker)
 ifneq ($(CONFIG_SYS_TEXT_BASE),)
 LDFLAGS_u-boot += -Ttext $(CONFIG_SYS_TEXT_BASE)
 endif

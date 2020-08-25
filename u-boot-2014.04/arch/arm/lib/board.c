@@ -63,6 +63,7 @@ extern void dataflash_print_info(void);
  ************************************************************************
  * May be supplied by boards if desired
  */
+#if 0 /* ∑¿÷π±‡“Î±®¥Ì [haihui.deng 2020/08/25 12:55]*/
 inline void __coloured_LED_init(void) {}
 void coloured_LED_init(void)
 	__attribute__((weak, alias("__coloured_LED_init")));
@@ -82,7 +83,27 @@ inline void __blue_led_on(void) {}
 void blue_led_on(void) __attribute__((weak, alias("__blue_led_on")));
 inline void __blue_led_off(void) {}
 void blue_led_off(void) __attribute__((weak, alias("__blue_led_off")));
-
+#else
+void __coloured_LED_init(void) {}
+void coloured_LED_init(void)
+	__attribute__((weak, alias("__coloured_LED_init")));
+void __red_led_on(void) {}
+void red_led_on(void) __attribute__((weak, alias("__red_led_on")));
+void __red_led_off(void) {}
+void red_led_off(void) __attribute__((weak, alias("__red_led_off")));
+void __green_led_on(void) {}
+void green_led_on(void) __attribute__((weak, alias("__green_led_on")));
+void __green_led_off(void) {}
+void green_led_off(void) __attribute__((weak, alias("__green_led_off")));
+void __yellow_led_on(void) {}
+void yellow_led_on(void) __attribute__((weak, alias("__yellow_led_on")));
+void __yellow_led_off(void) {}
+void yellow_led_off(void) __attribute__((weak, alias("__yellow_led_off")));
+void __blue_led_on(void) {}
+void blue_led_on(void) __attribute__((weak, alias("__blue_led_on")));
+void __blue_led_off(void) {}
+void blue_led_off(void) __attribute__((weak, alias("__blue_led_off")));
+#endif
 /*
  ************************************************************************
  * Init Utilities							*

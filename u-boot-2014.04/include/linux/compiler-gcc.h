@@ -88,6 +88,10 @@
 #define __always_unused			__attribute__((unused))
 
 #define __gcc_header(x) #x
-#define _gcc_header(x) __gcc_header(linux/compiler-gcc##x.h)
+#if 0   /* 强制使用compiler-gcc4.h [haihui.deng 2020/08/25 12:14]*/
+    #define _gcc_header(x) __gcc_header(linux/compiler-gcc##x.h)
+#else
+    #define _gcc_header(x) __gcc_header(linux/compiler-gcc4.h)
+#endif
 #define gcc_header(x) _gcc_header(x)
 #include gcc_header(__GNUC__)
