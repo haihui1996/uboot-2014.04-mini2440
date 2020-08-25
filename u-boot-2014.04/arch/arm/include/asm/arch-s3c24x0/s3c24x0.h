@@ -148,7 +148,8 @@ struct s3c2410_nand {
 #endif
 #ifdef CONFIG_S3C2440
 /* NAND FLASH (see S3C2440 manual chapter 6) */
-struct s3c2440_nand {
+// struct s3c2440_nand { /* 用s3c2410_nand.c,结构体换名称 [haihui.deng 2020/08/25 18:37]*/
+struct s3c2410_nand {
 	u32	nfconf;
 	u32	nfcont;
 	u32	nfcmd;

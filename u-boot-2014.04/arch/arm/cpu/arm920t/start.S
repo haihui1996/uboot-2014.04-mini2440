@@ -106,11 +106,11 @@ copyex:
 #  define pWTCON	0x15300000
 #  define INTMSK	0x14400008	/* Interrupt-Controller base addresses */
 #  define CLKDIVN	0x14800014	/* clock divisor register */
-#else
-#  define pWTCON	0x53000000
-#  define INTMSK	0x4A000008	/* Interrupt-Controller base addresses */
-#  define INTSUBMSK	0x4A00001C
-#  define CLKDIVN	0x4C000014	/* clock divisor register */
+# else
+	#define pWTCON		0x53000000
+	#define INTMSK		0x4A000008	/* Interrupt-Controller base addresses */
+	#define INTSUBMSK	0x4A00001C
+	#define CLKDIVN		0x4C000014	/* clock divisor register */
 # endif
 
 	ldr	r0, =pWTCON
@@ -129,11 +129,37 @@ copyex:
 	str	r1, [r0]
 # endif
 
+#if defined(CONFIG_S3C2440)	/* 设置系统时钟 [haihui.deng 2020/08/25 15:04]*/
+	/* FCLK:HCLK:PCLK = 1:4:8 */
+	ldr	r0, =CLKDIVN
+	mov	r1, #5
+	str	r1, [r0]
+
+	/* change bus mode from "fast bus mode" to "asynchronous bus mode" */
+	mrc	p15, 0, r1, c1, c0, 0x0	/* read ctrl regester */
+	orr r1, r1, #0xc0000000	/* asynchronous */
+	mrc	p15, 0, r1, c1, c0, 0x0	/* write ctrl regester */
+
+	#define S3C2440_MPLL_400MHZ	(0x7f<<12 | 0x2<<4 | 0x1)	/* refer to s3c2440.pdf page 255 */
+	#define S3C2440_UPLL_48MHZ	(0x38<<12 | 0x2<<4 | 0x2)
+	#define MPLLCON	0x4C000004
+	#define UPLLCON 0x4C000008
+
+	ldr r0, =UPLLCON
+	ldr r1, =S3C2440_UPLL_48MHZ
+	str	r1, [r0]
+	
+	ldr r0, =MPLLCON
+	ldr r1, =S3C2440_MPLL_400MHZ
+	str	r1, [r0]
+#else
 	/* FCLK:HCLK:PCLK = 1:2:4 */
 	/* default FCLK is 120 MHz ! */
 	ldr	r0, =CLKDIVN
 	mov	r1, #3
 	str	r1, [r0]
+#endif	/* CONFIG_S3C2440 */
+
 #endif	/* CONFIG_S3C24X0 */
 
 	/*

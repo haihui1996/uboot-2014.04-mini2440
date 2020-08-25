@@ -76,6 +76,12 @@ static inline struct s3c24x0_clock_power *s3c24x0_get_base_clock_power(void)
 	return (struct s3c24x0_clock_power *)S3C24X0_CLOCK_POWER_BASE;
 }
 
+/* add NAND_BASE define [haihui.deng 2020/08/25 17:00]*/
+static inline struct s3c2410_nand *s3c2410_get_base_nand(void)
+{
+	return (struct s3c2410_nand *)S3C2440_NAND_BASE;
+}
+
 static inline struct s3c24x0_lcd *s3c24x0_get_base_lcd(void)
 {
 	return (struct s3c24x0_lcd *)S3C24X0_LCD_BASE;
