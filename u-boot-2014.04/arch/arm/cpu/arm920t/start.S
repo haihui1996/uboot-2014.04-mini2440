@@ -85,6 +85,10 @@ start_code:
 	orr	r0, r0, #0xd3
 	msr	cpsr, r0
 
+#if defined(USEER_CONFIG_LED)
+	bl led_init
+#endif
+
 #if	defined(CONFIG_AT91RM9200DK) || defined(CONFIG_AT91RM9200EK)
 	/*
 	 * relocate exception table
@@ -124,21 +128,22 @@ copyex:
 	ldr	r0, =INTMSK
 	str	r1, [r0]
 # if defined(CONFIG_S3C2410)
-	ldr	r1, =0x3ff
+	ldr	r1, =0x7ff
 	ldr	r0, =INTSUBMSK
 	str	r1, [r0]
 # endif
 
-#if defined(CONFIG_S3C2440)	/* 设置系统时钟 [haihui.deng 2020/08/25 15:04]*/
+
+#if defined(CONFIG_S3C2440)	&& defined(CONFIG_ADJUST_FRE)	/* 设置系统时钟 [haihui.deng 2020/08/25 15:04]*/
 	/* FCLK:HCLK:PCLK = 1:4:8 */
 	ldr	r0, =CLKDIVN
 	mov	r1, #5
 	str	r1, [r0]
 
 	/* change bus mode from "fast bus mode" to "asynchronous bus mode" */
-	mrc	p15, 0, r1, c1, c0, 0x0	/* read ctrl regester */
+	mrc	p15, 0, r1, c1, c0, 0	/* read ctrl regester */
 	orr r1, r1, #0xc0000000	/* asynchronous */
-	mrc	p15, 0, r1, c1, c0, 0x0	/* write ctrl regester */
+	mrc	p15, 0, r1, c1, c0, 0	/* write ctrl regester */
 
 	#define S3C2440_MPLL_400MHZ	(0x7f<<12 | 0x2<<4 | 0x1)	/* refer to s3c2440.pdf page 255 */
 	#define S3C2440_UPLL_48MHZ	(0x38<<12 | 0x2<<4 | 0x2)
@@ -170,8 +175,10 @@ copyex:
 	bl	cpu_init_crit
 #endif
 
+#if defined(USEER_CONFIG_LED)
+	bl led_on1
+#endif
 	bl	_main
-
 /*------------------------------------------------------------------------------*/
 
 	.globl	c_runtime_cpu_setup
@@ -223,6 +230,46 @@ cpu_init_crit:
 	mov	pc, lr
 #endif /* CONFIG_SKIP_LOWLEVEL_INIT */
 
+/**LED测试程序 */
+#if defined(USEER_CONFIG_LED)
+	.globl led_init
+led_init:
+	ldr r11,=0x56000010	@GPBCON
+	ldr r12,=((1<<10) | (1<<12) | (1<<14) | (1<<16))	@GPB5~8配置为输出
+	str r12,[r11]
+	ldr r11,=0x56000014
+	ldr r12,=((1<<8)|(1<<7)|(1<<6)|(1<<5)) 
+	str r12,[r11]
+	mov pc, lr
+
+	.globl led_on1
+led_on1:
+	ldr r11,=0x56000014
+	ldr r12,=((1<<8)|(1<<7)|(1<<6)|(0<<5)) 
+	str r12,[r11]
+	mov pc, lr
+
+	.globl led_on2
+led_on2:
+	ldr r11,=0x56000014
+	ldr r12,=((1<<8)|(1<<7)|(0<<6)|(1<<5)) 
+	str r12,[r11]
+	mov pc, lr
+
+	.globl led_on3
+led_on3:
+	ldr r11,=0x56000014
+	ldr r12,=((1<<8)|(0<<7)|(1<<6)|(1<<5)) 
+	str r12,[r11]
+	mov pc, lr
+
+	.globl led_on4
+led_on4:
+	ldr r11,=0x56000014
+	ldr r12,=((0<<8)|(0<<7)|(0<<6)|(0<<5)) 
+	str r12,[r11]
+	mov pc, lr
+#endif
 /*
  *************************************************************************
  *

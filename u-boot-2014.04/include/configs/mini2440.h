@@ -106,8 +106,8 @@
 #define CONFIG_ZERO_BOOTDELAY_CHECK
 
 #define CONFIG_NETMASK		255.255.255.0
-#define CONFIG_IPADDR		10.0.0.110
-#define CONFIG_SERVERIP		10.0.0.1
+#define CONFIG_IPADDR		10.1.12.67
+#define CONFIG_SERVERIP		10.1.12.1
 
 #if defined(CONFIG_CMD_KGDB)
 #define CONFIG_KGDB_BAUDRATE	115200	/* speed to run kgdb serial port */
@@ -207,4 +207,7 @@
 
 #define CONFIG_BOARD_EARLY_INIT_F
 
+#define DEBUG
+#define CONFIG_ADJUST_FRE
+#define USEER_CONFIG_LED	/* LED指示初始化流程 */
 #endif /* __CONFIG_H */

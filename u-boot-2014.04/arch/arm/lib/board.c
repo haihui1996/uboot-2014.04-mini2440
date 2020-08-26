@@ -85,10 +85,13 @@ inline void __blue_led_off(void) {}
 void blue_led_off(void) __attribute__((weak, alias("__blue_led_off")));
 #else
 void __coloured_LED_init(void) {}
-void coloured_LED_init(void)
-	__attribute__((weak, alias("__coloured_LED_init")));
-void __red_led_on(void) {}
+void coloured_LED_init(void) __attribute__((weak, alias("__coloured_LED_init")));
+
+void __red_led_on(void) { 
+	// gpio_direction_output((S3C24X0_GPIO_BASE+0x14), 0); 
+}
 void red_led_on(void) __attribute__((weak, alias("__red_led_on")));
+
 void __red_led_off(void) {}
 void red_led_off(void) __attribute__((weak, alias("__red_led_off")));
 void __green_led_on(void) {}

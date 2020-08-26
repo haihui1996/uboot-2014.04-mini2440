@@ -16,7 +16,11 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+#if defined CONFIG_ADJUST_FRE
 #define FCLK_SPEED 2
+#else
+#define FCLK_SPEED 1
+#endif
 
 #if FCLK_SPEED==0		/* Fout = 203MHz, Fin = 12MHz for Audio */
 #define M_MDIV	0xC3
@@ -32,7 +36,11 @@ DECLARE_GLOBAL_DATA_PTR;
 #define M_SDIV	0x1
 #endif
 
+#if defined CONFIG_ADJUST_FRE
 #define USB_CLOCK 2
+#else
+#define USB_CLOCK 1
+#endif
 
 #if USB_CLOCK==0
 #define U_M_MDIV	0xA1
