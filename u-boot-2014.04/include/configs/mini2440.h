@@ -18,7 +18,7 @@
  * (easy to change)
  */
 #define CONFIG_ARM920T		/* This is an ARM920T Core */
-#if 0	/* –ﬁ∏ƒ≈‰÷√∫Í [haihui.deng 2020/08/25 14:30]*/
+#if 0	/* ‰øÆÊîπÈÖçÁΩÆÂÆè [haihui.deng 2020/08/25 14:30]*/
 	#define CONFIG_S3C24X0		/* in a SAMSUNG S3C24x0-type SoC */
 	#define CONFIG_S3C2410		/* specifically a SAMSUNG S3C2410 SoC */
 	#define CONFIG_SMDK2410		/* on a SAMSUNG SMDK2410 Board */
@@ -28,7 +28,7 @@
 	#define CONFIG_S3C24X0				/* in a SAMSUNG S3C24x0-type SoC */
 	#define CONFIG_S3C2440				/* specifically a SAMSUNG S3C2440 SOC */
 	#define CONFIG_MINI2440 			/* specifically a FriendlyArm Mini2440 SoC */
-	#define CONFIG_SKIP_LOWLEVEL_INIT	/* disable board lowlevel_init */
+	// #define CONFIG_SKIP_LOWLEVEL_INIT	/* disable board lowlevel_init */
 
 	#define CONFIG_SYS_TEXT_BASE	0x33f80000
 #endif
@@ -209,5 +209,5 @@
 
 #define DEBUG
 #define CONFIG_ADJUST_FRE
-#define USEER_CONFIG_LED	/* LED÷∏ æ≥ı ºªØ¡˜≥Ã */
+#define USEER_CONFIG_LED	/* LEDÊåáÁ§∫ÂàùÂßãÂåñÊµÅÁ®ã */
 #endif /* __CONFIG_H */

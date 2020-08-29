@@ -63,7 +63,7 @@ extern void dataflash_print_info(void);
  ************************************************************************
  * May be supplied by boards if desired
  */
-#if 0 /* ·ÀÖ¹±àÒë±¨´í [haihui.deng 2020/08/25 12:55]*/
+#if 0 /* é˜²æ­¢ç¼–è¯‘æŠ¥é”™ [haihui.deng 2020/08/25 12:55]*/
 inline void __coloured_LED_init(void) {}
 void coloured_LED_init(void)
 	__attribute__((weak, alias("__coloured_LED_init")));
@@ -559,7 +559,8 @@ void board_init_r(gd_t *id, ulong dest_addr)
 #endif
 	serial_initialize();
 
-	debug("Now running in RAM - U-Boot at: %08lx\n", dest_addr);
+	// debug("Now running in RAM - U-Boot at: %08lx\n", dest_addr);
+	printf("Now running in RAM - U-Boot at: %08lx\n", dest_addr);
 
 #ifdef CONFIG_LOGBUFFER
 	logbuff_init_ptrs();

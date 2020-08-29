@@ -175,10 +175,11 @@ copyex:
 	bl	cpu_init_crit
 #endif
 
-#if defined(USEER_CONFIG_LED)
-	bl led_on1
-#endif
 	bl	_main
+
+#if defined(USEER_CONFIG_LED)
+	bl led_on4
+#endif
 /*------------------------------------------------------------------------------*/
 
 	.globl	c_runtime_cpu_setup
@@ -200,6 +201,10 @@ c_runtime_cpu_setup:
 
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
 cpu_init_crit:
+
+#if defined(USEER_CONFIG_LED)
+	bl led_on1
+#endif
 	/*
 	 * flush v4 I/D caches
 	 */
@@ -224,7 +229,13 @@ cpu_init_crit:
 	 */
 	mov	ip, lr
 
+#if defined(USEER_CONFIG_LED)
+	bl led_on2	@lowlwvelinit finish
+#endif
 	bl	lowlevel_init
+#if defined(USEER_CONFIG_LED)
+	bl led_on3	@lowlwvelinit finish
+#endif
 
 	mov	lr, ip
 	mov	pc, lr
@@ -252,14 +263,14 @@ led_on1:
 	.globl led_on2
 led_on2:
 	ldr r11,=0x56000014
-	ldr r12,=((1<<8)|(1<<7)|(0<<6)|(1<<5)) 
+	ldr r12,=((1<<8)|(1<<7)|(0<<6)|(0<<5)) 
 	str r12,[r11]
 	mov pc, lr
 
 	.globl led_on3
 led_on3:
 	ldr r11,=0x56000014
-	ldr r12,=((1<<8)|(0<<7)|(1<<6)|(1<<5)) 
+	ldr r12,=((1<<8)|(0<<7)|(0<<6)|(0<<5)) 
 	str r12,[r11]
 	mov pc, lr
 

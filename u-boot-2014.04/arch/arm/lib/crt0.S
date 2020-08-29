@@ -60,9 +60,6 @@ ENTRY(_main)
 /*
  * Set up initial C runtime environment and call board_init_f(0).
  */
-#if defined(USEER_CONFIG_LED)
-	bl led_on2
-#endif
 
 #if defined(CONFIG_SPL_BUILD) && defined(CONFIG_SPL_STACK)
 	ldr	sp, =(CONFIG_SPL_STACK)
@@ -76,11 +73,6 @@ ENTRY(_main)
 	mov	r0, #0
 	bl	board_init_f
 	
-#if defined(USEER_CONFIG_LED)
-	bl led_on3
-#endif
-loopx:
-	b loopx
 #if ! defined(CONFIG_SPL_BUILD)
 
 /*
